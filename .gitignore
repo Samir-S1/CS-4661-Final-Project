@@ -1,0 +1,2 @@
+# Specific files to ignore for this project
+misc/lstm_intro/stateful_lstm_longterm.py
