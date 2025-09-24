@@ -1,2 +1,249 @@
-# Specific files to ignore for this project
-misc/lstm_intro/stateful_lstm_longterm.py
+# =============================================================================
+# Git Ignore for AQS Data Analysis & Machine Learning Project
+# =============================================================================
+
+# =============================================================================
+# DATA FILES (Large files that shouldn't be in git)
+# =============================================================================
+
+# Database files (can be regenerated from CSV)
+*.db
+*.sqlite
+*.sqlite3
+aqs_data_analysis/data/*.db
+aqs_data_analysis/data/*.sqlite
+
+# Large CSV data files (use Git LFS or external storage)
+*.csv
+# Exception: Keep small sample files if needed
+# !aqs_data_analysis/data/sample_*.csv
+
+# Compressed data files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# =============================================================================
+# PYTHON
+# =============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env
+.ENV/
+env.bak/
+venv.bak/
+
+# =============================================================================
+# JUPYTER NOTEBOOKS
+# =============================================================================
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Jupyter Lab workspace
+.jupyter/
+
+# =============================================================================
+# MACHINE LEARNING & AI
+# =============================================================================
+
+# Model files (often large)
+*.pth
+*.pkl
+*.h5
+*.model
+*.ckpt
+*.weights
+models/*.pth
+models/*.pkl
+models/*.h5
+aqs_data_analysis/models/*
+!aqs_data_analysis/models/.gitkeep
+
+# TensorBoard logs
+logs/
+tensorboard_logs/
+runs/
+
+# Weights & Biases
+wandb/
+
+# MLflow
+mlruns/
+
+# Experiment results
+results/
+outputs/
+experiments/
+
+# =============================================================================
+# DEVELOPMENT TOOLS
+# =============================================================================
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/.ropeproject
+
+# PyCharm
+.idea/
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope
+.ropeproject
+
+# =============================================================================
+# OPERATING SYSTEM
+# =============================================================================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# TEMPORARY & LOG FILES
+# =============================================================================
+
+# General
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+tmp/
+temp/
+.tmp/
+
+# Application logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =============================================================================
+# PROJECT SPECIFIC
+# =============================================================================
+
+# Generated visualizations (can be recreated)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+# Exception: Keep important documentation images
+!docs/images/*.png
+!README_images/*.png
+
+# Configuration files with secrets
+.env.local
+.env.production
+config.json
+secrets.json
+
+# Cache directories
+.cache/
+cache/
+
+# Documentation builds
+docs/_build/
+site/
