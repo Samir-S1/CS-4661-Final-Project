@@ -33,6 +33,31 @@ The `misc/` directory contains temporary experimental code, prototypes, and work
 
 The `aqs_data_analysis/` folder contains scripts, notebooks, and documentation for the air quality data analysis component of the project. Refer to its README for details on data sources, setup, and analysis workflow.
 
+## Prevent committing Jupyter notebook outputs
+
+Large Jupyter notebook outputs (images, attachments, long printed tables) can bloat the repository. To avoid accidentally committing notebook outputs, install and enable a notebook-stripper such as `nbstripout` which automatically removes output cells when you commit.
+
+Recommended steps (run in your project root):
+
+PowerShell (Windows):
+
+```powershell
+python -m pip install --user nbstripout
+python -m nbstripout --install
+```
+
+Git Bash / Linux / macOS:
+
+```bash
+python -m pip install --user nbstripout
+python -m nbstripout --install
+```
+
+Notes:
+
+- If you use a shared CI or have a project-wide policy, consider installing `nbstripout` globally or adding it to your repository's setup scripts so all contributors have it enabled.
+- An alternative is to use Git LFS for large notebook attachments or large binary assets, but `nbstripout` is lightweight and prevents output history from being committed in the first place.
+
 ## Authors
 
 - Samir S. (Samir-S1)
