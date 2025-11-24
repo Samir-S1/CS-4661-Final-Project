@@ -8,101 +8,8 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
-def calculate_trust_values(df, value_col='Sample Measurement', decay_rate=0.9):
-    """
-    Calculate trust values for each data point.
-    
-    Parameters:
-    -----------
-    df : DataFrame with datetime index and value column
-    value_col : Name of the column containing measurements
-    decay_rate : Trust decay per time step (0-1, default 0.9)
-    
-    Returns:
-    --------
-    DataFrame with trust values added
-    """
-    df = df.copy()
-    df['is_original'] = ~df[value_col].isna()
-    df['trust'] = 0.0
-    df['fill_method'] = 'missing'
-    
-    # Set trust to 1.0 for original observations
-    df.loc[df['is_original'], 'trust'] = 1.0
-    df.loc[df['is_original'], 'fill_method'] = 'original'
-    
-    # Forward fill with decreasing trust
-    last_observed_idx = None
-    steps_since_observation = 0
-    
-    for idx in df.index:
-        if df.loc[idx, 'is_original']:
-            last_observed_idx = idx
-            steps_since_observation = 0
-        elif last_observed_idx is not None:
-            steps_since_observation += 1
-            trust_value = (decay_rate ** steps_since_observation)
-            if df.loc[idx, 'trust'] < trust_value:
-                df.loc[idx, 'trust'] = trust_value
-                df.loc[idx, 'fill_method'] = 'forward'
-    
-    # Backward fill with decreasing trust (only if better than forward fill)
-    next_observed_idx = None
-    steps_since_observation = 0
-    
-    for idx in reversed(df.index):
-        if df.loc[idx, 'is_original']:
-            next_observed_idx = idx
-            steps_since_observation = 0
-        elif next_observed_idx is not None:
-            steps_since_observation += 1
-            trust_value = (decay_rate ** steps_since_observation)
-            if df.loc[idx, 'trust'] < trust_value:
-                df.loc[idx, 'trust'] = trust_value
-                df.loc[idx, 'fill_method'] = 'backward'
-    
-    return df
-
-
-def add_time_features(df, datetime_col='datetime'):
-    """
-    Add time-based features to the dataframe.
-    
-    Parameters:
-    -----------
-    df : DataFrame with datetime column
-    datetime_col : Name of datetime column
-    
-    Returns:
-    --------
-    DataFrame with added time features
-    """
-    df = df.copy()
-    dt = df[datetime_col]
-    
-    # Basic time features
-    df['hour'] = dt.dt.hour
-    df['day_of_week'] = dt.dt.dayofweek
-    df['day_of_month'] = dt.dt.day
-    df['month'] = dt.dt.month
-    df['day_of_year'] = dt.dt.dayofyear
-    
-    # Cyclical encoding for hour (important for LSTM)
-    df['hour_sin'] = np.sin(2 * np.pi * df['hour'] / 24)
-    df['hour_cos'] = np.cos(2 * np.pi * df['hour'] / 24)
-    
-    # Cyclical encoding for day of week
-    df['dow_sin'] = np.sin(2 * np.pi * df['day_of_week'] / 7)
-    df['dow_cos'] = np.cos(2 * np.pi * df['day_of_week'] / 7)
-    
-    # Cyclical encoding for month
-    df['month_sin'] = np.sin(2 * np.pi * df['month'] / 12)
-    df['month_cos'] = np.cos(2 * np.pi * df['month'] / 12)
-    
-    # Weekend indicator
-    df['is_weekend'] = (df['day_of_week'] >= 5).astype(int)
-    
-    return df
+# Import shared utility functions
+from lstm_utils import calculate_trust_values, add_time_features, create_sequences
 
 
 def test_trust_calculation():
@@ -234,16 +141,6 @@ def test_sequence_creation():
     print("\n" + "=" * 60)
     print("Testing Sequence Creation")
     print("=" * 60)
-    
-    def create_sequences(data, n_steps_in=5, n_steps_out=5):
-        """Create sequences for LSTM: n_steps_in -> n_steps_out"""
-        X, y = [], []
-        
-        for i in range(len(data) - n_steps_in - n_steps_out + 1):
-            X.append(data[i:i + n_steps_in])
-            y.append(data[i + n_steps_in:i + n_steps_in + n_steps_out, 0])
-        
-        return np.array(X), np.array(y)
     
     # Create sample data
     n_samples = 100

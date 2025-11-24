@@ -60,9 +60,13 @@ python scripts/load_data.py
 ```
 
 ### Python Dependencies
-Install required packages:
+Install required packages from the project root or `aqs_data_analysis` directory:
 ```bash
-pip install -r ../requirements.txt
+# From project root:
+pip install -r aqs_data_analysis/requirements.txt
+
+# OR from aqs_data_analysis directory:
+pip install -r requirements.txt
 ```
 
 Or install manually:
