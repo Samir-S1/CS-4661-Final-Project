@@ -20,19 +20,26 @@ aqs_data_analysis/
 We need the following Python dependencies for our analysis environment:
 
 ```bash
-pip install pandas numpy matplotlib plotly scikit-learn jupyter ipykernel sqlite3 pathlib
+pip install -r requirements.txt
 ```
 
-Alternatively, we can install from a requirements file:
+Alternatively, install manually:
 
+```bash
+pip install pandas numpy matplotlib plotly scikit-learn tensorflow jupyter ipykernel seaborn
 ```
-pandas>=1.5.0
-numpy>=1.21.0
-matplotlib>=3.5.0
-plotly>=5.0.0
-scikit-learn>=1.0.0
+
+The `requirements.txt` file includes:
+```
+pandas>=2.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+plotly>=5.14.0
+scikit-learn>=1.2.0
+tensorflow>=2.13.0
 jupyter>=1.0.0
 ipykernel>=6.0.0
+seaborn>=0.12.0
 ```
 
 ## Data Acquisition Protocol
@@ -84,15 +91,31 @@ The SQL queries are designed to work efficiently with multi-million record datas
 
 ### Jupyter Notebook Interface
 
-We can access the primary analysis environment through Jupyter notebooks:
+We can access the analysis environment through Jupyter notebooks:
 
+**Data Exploration and Visualization:**
 ```bash
 jupyter notebook notebooks/aqs_data_visualization.ipynb
 ```
 
+**LSTM PM2.5 Prediction Model:**
+```bash
+jupyter notebook notebooks/lstm_airnow2.ipynb
+```
+
+The `lstm_airnow2.ipynb` notebook implements:
+- LSTM neural network for PM2.5 predictions (5 frames in, 5 frames out)
+- Trust-based forward and backward filling for missing data
+- Temporal feature engineering (cyclical time encoding)
+- Comprehensive visualizations with trust-value color coding
+- Model training, evaluation, and prediction visualization
+
+See `notebooks/LSTM_README.md` for detailed documentation.
+
 The notebook environment provides:
 
 - Interactive data visualization capabilities
+- Machine learning and deep learning models (LSTM)
 - Statistical analysis and modeling tools
 - Comprehensive dataset exploration functions
 - Publication-quality figure generation
